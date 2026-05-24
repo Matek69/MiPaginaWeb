@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kit Interactivo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
+        }
+
+        body{
+            background:#050816;
+            color:white;
+            overflow-x:hidden;
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        body::before{
+            content:'';
+            position:fixed;
+            width:600px;
+            height:600px;
+            background:radial-gradient(circle,#9333ea55,transparent 70%);
+            top:-200px;
+            right:-200px;
+            z-index:-1;
+        }
+
+        body::after{
+            content:'';
+            position:fixed;
+            width:500px;
+            height:500px;
+            background:radial-gradient(circle,#06b6d455,transparent 70%);
+            bottom:-200px;
+            left:-150px;
+            z-index:-1;
+        }
+
+        nav{
+            width:100%;
+            padding:25px 8%;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            position:fixed;
+            top:0;
+            z-index:1000;
+            backdrop-filter:blur(18px);
+            background:rgba(5,8,22,0.5);
+            border-bottom:1px solid rgba(255,255,255,0.08);
+        }
+
+        nav h1{
+            font-size:1.7rem;
+            background:linear-gradient(to right,#c084fc,#22d3ee);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        nav ul{
+            display:flex;
+            list-style:none;
+            gap:35px;
+        }
+
+        nav ul li a{
+            text-decoration:none;
+            color:#d4d4d8;
+            transition:0.3s;
+            font-weight:500;
+        }
+
+        nav ul li a:hover{
+            color:#c084fc;
+        }
+
+        .hero{
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+            padding:0 10%;
+        }
+
+        .hero-content{
+            max-width:900px;
+        }
+
+        .hero-content h2{
+            font-size:5rem;
+            line-height:1.1;
+            margin-bottom:25px;
+            background:linear-gradient(to right,#ffffff,#c084fc,#22d3ee);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .hero-content p{
+            color:#cbd5e1;
+            font-size:1.2rem;
+            line-height:1.8;
+            margin-bottom:35px;
+        }
+
+        .btn{
+            display:inline-block;
+            padding:15px 35px;
+            border-radius:50px;
+            text-decoration:none;
+            color:white;
+            font-weight:600;
+            background:linear-gradient(to right,#9333ea,#06b6d4);
+            transition:0.4s;
+            box-shadow:0 10px 30px rgba(147,51,234,0.4);
+        }
+
+        .btn:hover{
+            transform:translateY(-5px) scale(1.03);
+        }
+
+        section{
+            padding:120px 10%;
+        }
+
+        .title{
+            text-align:center;
+            font-size:3rem;
+            margin-bottom:60px;
+            background:linear-gradient(to right,#c084fc,#22d3ee);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .about{
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08);
+            padding:50px;
+            border-radius:35px;
+            backdrop-filter:blur(15px);
+        }
+
+        .about p{
+            text-align:center;
+            font-size:1.15rem;
+            line-height:2;
+            color:#d4d4d8;
+        }
+
+        .cards{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+            gap:35px;
+        }
+
+        .card{
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:30px;
+            overflow:hidden;
+            backdrop-filter:blur(15px);
+            transition:0.4s;
+        }
+
+        .card:hover{
+            transform:translateY(-12px) rotate(-1deg);
+            border-color:#9333ea;
+            box-shadow:0 15px 40px rgba(147,51,234,0.25);
+        }
+
+        .card img{
+            width:100%;
+            height:230px;
+            object-fit:cover;
+        }
+
+        .card-content{
+            padding:30px;
+        }
+
+        .card-content h3{
+            font-size:1.5rem;
+            margin-bottom:15px;
+        }
+
+        .card-content p{
+            color:#cbd5e1;
+            line-height:1.8;
+            margin-bottom:25px;
+        }
+
+        .manual-container{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+            gap:35px;
+        }
+
+        .manual-card{
+            position:relative;
+            padding:40px 35px;
+            border-radius:35px;
+            overflow:hidden;
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08);
+            backdrop-filter:blur(15px);
+            transition:0.4s;
+        }
+
+        .manual-card::before{
+            content:'';
+            position:absolute;
+            width:180px;
+            height:180px;
+            background:linear-gradient(to right,#9333ea55,#06b6d455);
+            border-radius:50%;
+            top:-60px;
+            right:-60px;
+        }
+
+        .manual-card:hover{
+            transform:translateY(-10px);
+            border-color:#9333ea;
+            box-shadow:0 20px 40px rgba(147,51,234,0.2);
+        }
+
+        .manual-number{
+            font-size:4rem;
+            font-weight:700;
+            opacity:0.15;
+            margin-bottom:10px;
+        }
+
+        .manual-card h3{
+            font-size:1.5rem;
+            margin-bottom:15px;
+            position:relative;
+            z-index:2;
+        }
+
+        .manual-card p{
+            color:#cbd5e1;
+            line-height:1.8;
+            margin-bottom:25px;
+            position:relative;
+            z-index:2;
+        }
+
+        .manual-btn{
+            display:inline-block;
+            padding:12px 25px;
+            border-radius:50px;
+            text-decoration:none;
+            color:white;
+            background:linear-gradient(to right,#9333ea,#06b6d4);
+            font-weight:600;
+            transition:0.3s;
+            position:relative;
+            z-index:2;
+        }
+
+        .manual-btn:hover{
+            transform:scale(1.05);
+        }
+
+        .theory-container{
+            display:flex;
+            flex-direction:column;
+            gap:40px;
+        }
+
+        .theory-block{
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08);
+            padding:50px;
+            border-radius:35px;
+            backdrop-filter:blur(15px);
+        }
+
+        .theory-block h3{
+            font-size:2rem;
+            margin-bottom:25px;
+        }
+
+        .theory-block p{
+            color:#d4d4d8;
+            line-height:2;
+            margin-bottom:20px;
+        }
+
+        .theory-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:30px;
+        }
+
+        .theory-card{
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:30px;
+            padding:35px;
+            transition:0.4s;
+        }
+
+        .theory-card:hover{
+            transform:translateY(-8px);
+            border-color:#9333ea;
+        }
+
+        .theory-card h3{
+            margin-bottom:20px;
+            font-size:1.5rem;
+        }
+
+        .theory-card p{
+            color:#cbd5e1;
+            line-height:1.8;
+            margin-bottom:20px;
+        }
+
+        .formula{
+            padding:15px;
+            border-radius:15px;
+            background:rgba(147,51,234,0.15);
+            text-align:center;
+            font-size:1.3rem;
+            font-weight:600;
+            margin-top:15px;
+        }
+
+        .galeria{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:25px;
+        }
+
+        .galeria img{
+            width:100%;
+            height:250px;
+            object-fit:cover;
+            border-radius:25px;
+        }
+
+        footer{
+            padding:50px;
+            text-align:center;
+            color:#94a3b8;
+            border-top:1px solid rgba(255,255,255,0.08);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <h1>Kit Física</h1>
+
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#sobre">Proyecto</a></li>
+            <li><a href="#experimentos">Experimentos</a></li>
+            <li><a href="#teoria">Teoría</a></li>
+            <li><a href="#manuales">Manuales</a></li>
+            <li><a href="#galeria">Galería</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+
+            <h2>Kit Interactivo</h2>
+
+            <p>
+                Proyecto experimental enfocado en demostrar los principios del equilibrio mecánico mediante experiencias prácticas e interactivas.
+            </p>
+
+            <a href="#experimentos" class="btn">Explorar</a>
+
+        </div>
+    </section>
+
+    <section id="sobre">
+
+        <h2 class="title">Sobre el Proyecto</h2>
+
+        <div class="about">
+
+            <p>
+                Este kit didáctico experimental fue diseñado para facilitar la comprensión
+                de los principios del equilibrio mecánico mediante experimentos físicos
+                construidos de manera práctica y visual.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section id="experimentos">
+
+        <h2 class="title">Experimentos</h2>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <img src="img/tensegridad.jpg">
+
+                <div class="card-content">
+
+                    <h3>Mesa de Tensegridad</h3>
+
+                    <p>
+                        Demuestra el equilibrio entre tensión y compresión manteniendo una estructura suspendida.
+                    </p>
+
+                    <a href="#manuales" class="btn">Ver Manual</a>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <img src="img/balanza.jpg">
+
+                <div class="card-content">
+
+                    <h3>Balanza de Equilibrio</h3>
+
+                    <p>
+                        Permite analizar cómo las fuerzas y masas se compensan para mantener estabilidad.
+                    </p>
+
+                    <a href="#manuales" class="btn">Ver Manual</a>
+
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <img src="img/globos.jpg">
+
+                <div class="card-content">
+
+                    <h3>Equilibrio con Globos</h3>
+
+                    <p>
+                        Evidencia cómo el aire tiene masa y altera el equilibrio del sistema.
+                    </p>
+
+                    <a href="#manuales" class="btn">Ver Manual</a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="teoria">
+
+        <h2 class="title">Fundamento Teórico</h2>
+
+        <div class="theory-container">
+
+            <div class="theory-block">
+
+                <h3>Propósito del Proyecto</h3>
+
+                <p>
+                    Este proyecto tiene como propósito el diseño y elaboración de un kit didáctico experimental orientado a la enseñanza de los principios del equilibrio mecánico en sistemas físicos.
+                </p>
+
+                <p>
+                    A través de la experimentación práctica, se busca promover un aprendizaje significativo basado en la observación, análisis e interpretación de fenómenos físicos cotidianos.
+                </p>
+
+            </div>
+
+            <div class="theory-grid">
+
+                <div class="theory-card">
+
+                    <h3>Equilibrio Mecánico</h3>
+
+                    <p>
+                        Un sistema está en equilibrio cuando no experimenta cambios en su movimiento.
+                    </p>
+
+                    <div class="formula">
+                        ∑F = 0
+                    </div>
+
+                    <div class="formula">
+                        ∑τ = 0
+                    </div>
+
+                </div>
+
+                <div class="theory-card">
+
+                    <h3>Torque</h3>
+
+                    <p>
+                        El torque mide la capacidad de una fuerza para producir rotación.
+                    </p>
+
+                    <div class="formula">
+                        τ = F · d
+                    </div>
+
+                </div>
+
+                <div class="theory-card">
+
+                    <h3>Ley de la Palanca</h3>
+
+                    <p>
+                        El equilibrio ocurre cuando los momentos de fuerza son iguales.
+                    </p>
+
+                    <div class="formula">
+                        F₁ · d₁ = F₂ · d₂
+                    </div>
+
+                </div>
+
+                <div class="theory-card">
+
+                    <h3>Peso del Aire</h3>
+
+                    <p>
+                        El aire posee masa y peso, por lo tanto puede alterar el equilibrio de un sistema.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="manuales">
+
+        <h2 class="title">Guías Interactivas</h2>
+
+        <div class="manual-container">
+
+            <div class="manual-card">
+
+                <div class="manual-number">01</div>
+
+                <h3>Mesa de Tensegridad</h3>
+
+                <p>
+                    Explicación completa sobre tensión, compresión y equilibrio estructural.
+                </p>
+
+                <a href="manuales/manual_tensegridad.pdf" class="manual-btn" target="_blank">
+    Abrir Manual
+</a>
+
+            </div>
+
+            <div class="manual-card">
+
+                <div class="manual-number">02</div>
+
+                <h3>Balanza de Equilibrio</h3>
+
+                <p>
+                    Análisis del equilibrio de fuerzas y distribución de masas.
+                </p>
+
+                <a href="manuales/manual_balanza.pdf" class="manual-btn" target="_blank">
+    Abrir Manual
+</a>
+
+            </div>
+
+            <div class="manual-card">
+
+                <div class="manual-number">03</div>
+
+                <h3>Equilibrio con Globos</h3>
+
+                <p>
+                    Observación del cambio brusco del equilibrio al modificar el sistema.
+                </p>
+
+                <a href="manuales/manual_globos.pdf" class="manual-btn" target="_blank">
+    Abrir Manual
+</a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="galeria">
+
+        <h2 class="title">Galería</h2>
+
+        <div class="galeria">
+
+            <img src="img/tensegridad.jpg">
+
+            <img src="img/balanza.jpg">
+
+            <img src="img/globos.jpg">
+
+        </div>
+
+    </section>
+
+    <footer>
+
+        <p>
+            Proyecto desarrollado por Jeferson Zuluaga • Kit Interactivo de Física
+        </p>
+
+    </footer>
+
+</body>
+</html> 
